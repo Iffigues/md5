@@ -21,13 +21,14 @@ typedef struct  s_md5 {
     short *rots[4];
     unsigned kspace[64];
     unsigned *k;
-    unsigned DigestH;
+    unsigned DigestH[4];
 }  t_md5;
 
 typedef unsigned (*DgstFctn)(unsigned a[]);
 
 
 t_md5   init();
+unsigned *maker(t_md5 *l,  const char *msg, int mlen);
 unsigned f0( unsigned abcd[] );
 unsigned f1( unsigned abcd[] );
 unsigned f2( unsigned abcd[] );

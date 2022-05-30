@@ -1,12 +1,12 @@
 NAME=ft_md5
 SRC=main.c open.c md5.c init_md5.c
 OBJ= $(SRC:.c=.o)
-CC= gcc -fsanitize=address
+CC= gcc -g -fsanitize=address
 INCLUDE= -I ./
 all:$(NAME)
 $(NAME):$(OBJ)
 	@make -C libft/ 
-	$(CC) $(INCLUDE) $(OBJ) -o $(NAME) libft/libft.a
+	$(CC) $(INCLUDE) $(OBJ) -o $(NAME) libft/libft.a -lm
 %.o:%.c
 	$(CC) $(INCLUDE) -c $< 
 clean:

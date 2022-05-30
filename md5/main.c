@@ -112,9 +112,9 @@ static t_md_opt getOptl() {
 
 int  main(int argc, char **argv)
 {
-    init();
     t_md_opt l = getOptl();
-
+    md5(NULL);
+    return 1;
 	if (argc > 1) {
 		int y = opt(++argv, &l);
         if (y) return (EXIT_FAILURE);
