@@ -1,4 +1,12 @@
 #include "ft_md.h"
+
+
+int outer(char *t) {
+    int fd = open(t, O_WRONLY | O_APPEND | O_CREAT, 0644);
+    printf("hello %d\n", fd);
+    return fd;
+}
+
 int opens(char *t) {
     int fd = open(t, O_RDONLY, 0);
     return fd;

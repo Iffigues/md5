@@ -1,10 +1,10 @@
 #include "ft_md.h"
 
  int psf(char **argv, t_md_opt *l) {
-    printf("%s\n", *argv);
     if (!argv)
         return -1;
-    if (ft_strncmp(*argv, "md5", 3) == 0) {
+    if (ft_strcmp(*argv, "md5") == 0) {
+        l->pf = md5;
         return 1;
     }
     l->pf = NULL;
@@ -41,9 +41,13 @@ static int getOpt(char c, int u, char *t, t_md_opt *y) {
 }
 
 int getOutput(t_md_opt *l, char *h) {
-    int i = opens(h);
-    l->out = i;
-    return i;
+    if (!access(h, F_OK) == 0) {
+        printf("leo\n");
+        int i = outer(h);
+        l->out = i;
+        return 1;
+    }
+    return 0;
 }
 
 static int opt(char **argv, t_md_opt *l) {
@@ -70,7 +74,8 @@ static int opt(char **argv, t_md_opt *l) {
         
                 if (ft_strlen(*argv) == 0)
                     return (EXIT_FAILURE);
-                getOutput(l, *argv);
+                if (!getOutput(l, *argv))
+                    return EXIT_FAILURE;
                 l->t = 1;
             } else if(ft_strlen(*argv) == 2) {
                 u++;
@@ -96,6 +101,8 @@ static t_md_opt getOptl() {
     l.p = 0;
     l.q = 0;
     l.out = 1;
+    l.arg = NULL;
+    l.pf = NULL;
     l.r = 0;
     l.t = 0;
     l.s = 0;
@@ -105,11 +112,13 @@ static t_md_opt getOptl() {
 
 int  main(int argc, char **argv)
 {
+    init();
     t_md_opt l = getOptl();
 
 	if (argc > 1) {
 		int y = opt(++argv, &l);
-        if (!y) return (EXIT_FAILURE);
+        if (y) return (EXIT_FAILURE);
+        l.pf(&l);
     }
 	return (EXIT_FAILURE);
 } 
