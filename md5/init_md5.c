@@ -49,8 +49,8 @@ t_md5 init() {
      l.ff[1] = &f1;
      l.ff[2] = &f2;
      l.ff[3] = &f3;
-    unsigned Digest[4] = { 0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476 };
-    ccpy(l.DigestHo, Digest,4);
+     Digest h0 = { 0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476 };
+    ccpy(l.h0, h0,4);
     short M[] = { 1, 5, 3, 7 };
     ft_memcpy(l.M, M, 4);
     short O[] = { 0, 1, 5, 0 };
@@ -64,7 +64,10 @@ t_md5 init() {
     short rot3[] = { 6,10,15,21};
     ft_memcpy(l.rot3, rot3, 4);
     short *rots[] = {rot0, rot1, rot2, rot3 };
-    ft_memcpy(l.rots, rots, 4);
+    l.rots[0] = rot0;
+    l.rots[1] = rot1;
+    l.rots[2] = rot2;
+    l.rots[3] = rot3;
     return l;
 }
 
@@ -84,7 +87,7 @@ unsigned *maker(t_md5 *l,  const char *msg, int mlen) {
     unsigned char *msg2;
     if (l->k==NULL) l->k= calcKs(l->kspace);
     for (q=0; q<4; q++)
-        l->DigestH[q] = l->DigestHo[q]; 
+        l->h[q] = l->h0[q]; 
     {
         grps  = 1 + (mlen+8)/64;
         msg2 = malloc( 64*grps);
@@ -102,16 +105,17 @@ unsigned *maker(t_md5 *l,  const char *msg, int mlen) {
     for (grp=0; grp<grps; grp++)
     {
         ft_memcpy( mm.b, msg2+os, 64);
-        for(q=0;q<4;q++) abcd[q] = l->DigestH[q];
+        for(q=0;q<4;q++) abcd[q] = l->h[q];
         for (p = 0; p<4; p++) {
             fctn = l->ff[p];
             rotn = l->rots[p];
+            printf("%hn\n", l->rots[p]);
             m = l->M[p]; o= l->O[p];
             for (q=0; q<16; q++) {
                 g = (m*q + o) % 16;
-                printf("abcd=%d\n", abcd[1] + rol( abcd[0]+ fctn(abcd) + l->k[q+16*p] + mm.w[g], rotn[q%4]));
+                abcd[0]+ fctn(abcd) + l->k[q+16*p] + mm.w[g];
+                printf("rotn = %d  %d\n", abcd[0]+ fctn(abcd) + l->k[q+16*p] + mm.w[g], rotn[q%4]);
                 f = abcd[1] + rol( abcd[0]+ fctn(abcd) + l->k[q+16*p] + mm.w[g], rotn[q%4]);
-
                 abcd[0] = abcd[3];
                 abcd[3] = abcd[2];
                 abcd[2] = abcd[1];
@@ -119,12 +123,12 @@ unsigned *maker(t_md5 *l,  const char *msg, int mlen) {
             }
         }
         for (p=0; p<4; p++)
-            l->DigestH[p] += abcd[p];
+            l->h[p] += abcd[p];
         os += 64;
     }
  
         if( msg2 )
          free( msg2 );
  
-        return l->DigestH;
+        return l->h;
 } 

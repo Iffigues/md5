@@ -6,11 +6,11 @@ typedef union uwb {
     unsigned char b[4];
 } WBunion;
  
-
+typedef unsigned Digest[4];
 typedef unsigned (*DgstFctn)(unsigned a[]);
 
 typedef struct  s_md5 {
-    unsigned DigestHo [4];
+    Digest h0;
     DgstFctn ff[4];
     short M[4];
     short O[4];
@@ -21,7 +21,7 @@ typedef struct  s_md5 {
     short *rots[4];
     unsigned kspace[64];
     unsigned *k;
-    unsigned DigestH[4];
+    Digest h;
 }  t_md5;
 
 typedef unsigned (*DgstFctn)(unsigned a[]);
