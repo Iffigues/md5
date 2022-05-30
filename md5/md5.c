@@ -16,6 +16,6 @@ int mdd(char *msg) {
     
 }
 int md5(t_md_opt *e) {
-    int j,k;
+
     mdd("The quick brown fox jumps over the lazy dog.");   
 }
