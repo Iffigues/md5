@@ -42,7 +42,7 @@ static char  *collapse(char *r, unsigned char *b, int l) {
     }
     return colle(r, b, l);
 }
-int reads(int fd) {
+char *reads(int fd) {
     int i = 30;
     int p = 0;
     char *r;
@@ -54,7 +54,5 @@ int reads(int fd) {
         r = collapse(r, buf, n);
         ft_bzero(buf,i + 1);
     }
-    printf("%s\n",r);
-    free(r);
-    return 1;
+    return r;
 }

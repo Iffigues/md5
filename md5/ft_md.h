@@ -22,10 +22,9 @@ typedef struct  s_md_opt
 }               t_md_opt;
 int             outer(char *t);
 int             opens(char *t);
-int             reads(int fd);
+char             *reads(int fd);
 size_t          ft_strlen(const char *s);
 int             ft_strncmp(const char *s1, const char *s2, size_t n);
 int             md5(t_md_opt *e);
-char            *read_stdin();
 #endif
 
