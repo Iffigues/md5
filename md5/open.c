@@ -22,7 +22,7 @@ static char *colle(char *r, unsigned char *b, int l) {
         p[z] = r[z];
         z++;
     }
-    while (b[u]) {
+    while (u < l) {
         p[z++] = b[u++];
     }
     p[z] = 0;
@@ -52,7 +52,9 @@ char *reads(int fd) {
     unsigned char  buf[i + 1];
     ft_bzero(buf,i + 1);
     while ((n = read(fd, buf, i)) > 0) {
+         
         r = collapse(r, buf, n);
+     
         ft_bzero(buf,i + 1);
     }
     return r;

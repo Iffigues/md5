@@ -10,6 +10,7 @@ void print_md5(unsigned *d) {
 }
 
 unsigned  *mdd(char *msg) {
+    printf("%s strlen= %ld\n", msg ,ft_strlen(msg));
     return maker(msg, ft_strlen(msg));   
 }
 
@@ -76,6 +77,7 @@ int vava(t_md_opt *e) {
 }
 
 int md5(t_md_opt *e) {
+
     if (e->arg == NULL)
        return vovo(e);
     return vava(e);
