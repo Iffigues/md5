@@ -43,8 +43,9 @@ static char  *collapse(char *r, unsigned char *b, int l) {
     }
     return colle(r, b, l);
 }
-char *reads(int fd) {
+t_msg reads(int fd) {
     int i = 30;
+    t_msg   y;
     int p = 0;
     char *r;
     r = NULL;
@@ -52,10 +53,9 @@ char *reads(int fd) {
     unsigned char  buf[i + 1];
     ft_bzero(buf,i + 1);
     while ((n = read(fd, buf, i)) > 0) {
-         
-        r = collapse(r, buf, n);
-     
+        y.msg = collapse(y.msg, buf, n);
+        y.size += n;
         ft_bzero(buf,i + 1);
     }
-    return r;
+    return y;
 }

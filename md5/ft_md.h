@@ -8,6 +8,11 @@
 # include<fcntl.h> 
 # include<errno.h> 
 
+typedef struct  s_msg {
+    char        *msg;
+    int         size;
+}               t_msg;
+
 typedef struct  s_md_opt
 {
     int         out;
@@ -22,7 +27,7 @@ typedef struct  s_md_opt
 }               t_md_opt;
 int             outer(char *t);
 int             opens(char *t);
-char             *reads(int fd);
+t_msg            reads(int fd);
 size_t          ft_strlen(const char *s);
 int             ft_strncmp(const char *s1, const char *s2, size_t n);
 int             md5(t_md_opt *e);
