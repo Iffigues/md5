@@ -13,53 +13,64 @@ unsigned  *mdd(char *msg) {
     return maker(msg, ft_strlen(msg));   
 }
 
-int vovo(t_md_opt *e) {
-    unsigned *d;
-    char *t = reads(STDIN_FILENO);
-    t[ft_strlen(t) - 1] = 0; 
-    d = mdd(t);
-    if (!e->q && !e->r) {
+void printer(t_md_opt *e, char *t, char *y,  int i) {
+       if (i) printf("MD5 ");
+       unsigned *d = mdd(t);
+       if (!e->q && !e->r) {
         if (e->p)
          printf("(\"%s\") = ", t);
         else 
-         printf("(stdin) = ");
+         printf("(%s) = ", y);
     }
     print_md5(d);
      if (!e->q && e->r) {
         if (e->p)
          printf(" = (\"%s\")", t);
         else 
-         printf(" = (stdin)");
+         printf(" = (%s)", y);
     }
     printf("\n");
+}
+
+int vovo(t_md_opt *e) {
+    char *t = reads(STDIN_FILENO);
+    t[ft_strlen(t) - 1] = 0;
+    if (e->p)
+        printer(e, t, t, 0);
+    else 
+    printer(e, t, "stdin", 0);
     if (t) free(t);
     return 0;
 }
+
+
 
 int vava(t_md_opt *e) {
     char *t = NULL;
     char *p = NULL;
     unsigned *d;
+    int i;
 
     if (e->s) 
         t = *e->arg++;
-
     if (e->p)
         p = reads(STDIN_FILENO);
     if (p) {
         p[ft_strlen(p) - 1] = 0; 
-        d = mdd(p);
-        print_md5(d);
+        printer(e, p, p, 0);
         free(p);
     }
-  
-    if (t) {
-        d = mdd(t);
-        print_md5(d);
-    }
+    if (t)
+        printer(e, t, t, 1);
    
     while (*e->arg) {
-        e->arg++;
+        i = opens(*e->arg);
+        if (i < 0)
+            return 1;
+        p = reads(i);
+        printer(e, p, *e->arg, 1);
+        *e->arg++;
+        free(p);
     }
     return 0;
 }

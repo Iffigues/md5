@@ -26,6 +26,7 @@ static char *colle(char *r, unsigned char *b, int l) {
         p[z++] = b[u++];
     }
     p[z] = 0;
+    free(r);
     return p;
 }
 
