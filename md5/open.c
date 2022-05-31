@@ -47,8 +47,8 @@ t_msg reads(int fd) {
     int i = 30;
     t_msg   y;
     int p = 0;
-    char *r;
-    r = NULL;
+    y.msg = NULL;
+    y.size = 0;
     int n;
     unsigned char  buf[i + 1];
     ft_bzero(buf,i + 1);
