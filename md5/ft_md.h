@@ -25,6 +25,7 @@ int             opens(char *t);
 int             reads(int fd);
 size_t          ft_strlen(const char *s);
 int             ft_strncmp(const char *s1, const char *s2, size_t n);
-int              md5(t_md_opt *e);
+int             md5(t_md_opt *e);
+char            *read_stdin();
 #endif
 

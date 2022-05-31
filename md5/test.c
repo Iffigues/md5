@@ -47,7 +47,6 @@ unsigned rol( unsigned v, short amt )
 unsigned *md5( const char *msg, int mlen) 
 {
     static Digest h0 = { 0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476 };
-//    static Digest h0 = { 0x01234567, 0x89ABCDEF, 0xFEDCBA98, 0x76543210 };
     static DgstFctn ff[] = { &f0, &f1, &f2, &f3 };
     static short M[] = { 1, 5, 3, 7 };
     static short O[] = { 0, 1, 5, 0 };
@@ -85,11 +84,8 @@ unsigned *md5( const char *msg, int mlen)
         q = mlen + 1;
         while (q < 64*grps){ msg2[q] = 0; q++ ; }
         {
-//            unsigned char t;
             WBunion u;
             u.w = 8*mlen;
-//            t = u.b[0]; u.b[0] = u.b[3]; u.b[3] = t;
-//            t = u.b[1]; u.b[1] = u.b[2]; u.b[2] = t;
             q -= 8;
             memcpy(msg2+q, &u.w, 4 );
         }
@@ -138,5 +134,8 @@ int main( int argc, char *argv[] )
     }
     printf("\n");
  
+    
+
+
     return 0;
 }

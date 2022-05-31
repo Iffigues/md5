@@ -1,16 +1,6 @@
 #include "ft_md.h"
 
 
-int outer(char *t) {
-    int fd = open(t, O_WRONLY | O_APPEND | O_CREAT, 0644);
-    printf("hello %d\n", fd);
-    return fd;
-}
-
-int opens(char *t) {
-    int fd = open(t, O_RDONLY, 0);
-    return fd;
-}
 static char *colle(char *r, unsigned char *b, int l) {
     char *p;
     int z = 0;
@@ -28,7 +18,6 @@ static char *colle(char *r, unsigned char *b, int l) {
     p[z] = 0;
     return p;
 }
-
 static char  *collapse(char *r, unsigned char *b, int l) {
     if (r == NULL) {
         int i = 0;
@@ -42,19 +31,20 @@ static char  *collapse(char *r, unsigned char *b, int l) {
     }
     return colle(r, b, l);
 }
-int reads(int fd) {
+
+char *read_stdin() {
+    int n;
     int i = 30;
-    int p = 0;
+    unsigned char  buf[i + 1];
     char *r;
     r = NULL;
-    int n;
-    unsigned char  buf[i + 1];
+
     ft_bzero(buf,i + 1);
-    while ((n = read(fd, buf, i)) > 0) {
+    while ((n = read(STDIN_FILENO, buf, i)) > 0) {
         r = collapse(r, buf, n);
         ft_bzero(buf,i + 1);
     }
-    printf("%s\n",r);
+    printf("%s\n", r);
     free(r);
-    return 1;
+    return NULL;
 }

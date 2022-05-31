@@ -79,8 +79,21 @@ t_md5 init() {
 }
 
 
-unsigned *maker(t_md5 *l,  const char *msg, int mlen) {
-    unsigned abcd[4];
+unsigned *maker( const char *msg, int mlen) {
+ static Digest h0 = { 0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476 };
+    static DgstFctn ff[] = { &f0, &f1, &f2, &f3 };
+    static short M[] = { 1, 5, 3, 7 };
+    static short O[] = { 0, 1, 5, 0 };
+    static short rot0[] = { 7,12,17,22};
+    static short rot1[] = { 5, 9,14,20};
+    static short rot2[] = { 4,11,16,23};
+    static short rot3[] = { 6,10,15,21};
+    static short *rots[] = {rot0, rot1, rot2, rot3 };
+    static unsigned kspace[64];
+    static unsigned *k;
+ 
+    static Digest h;
+    Digest abcd;
     DgstFctn fctn;
     short m, o, g;
     unsigned f;
@@ -92,13 +105,15 @@ unsigned *maker(t_md5 *l,  const char *msg, int mlen) {
     int os = 0;
     int grp, grps, q, p;
     unsigned char *msg2;
-    if (l->k==NULL) l->k= calcKs(l->kspace);
-    for (q=0; q<4; q++)
-        l->h[q] = l->h0[q]; 
+ 
+    if (k==NULL) k= calcKs(kspace);
+ 
+    for (q=0; q<4; q++) h[q] = h0[q];   // initialize
+ 
     {
         grps  = 1 + (mlen+8)/64;
         msg2 = malloc( 64*grps);
-        ft_memcpy( msg2, msg, mlen);
+        memcpy( msg2, msg, mlen);
         msg2[mlen] = (unsigned char)0x80;  
         q = mlen + 1;
         while (q < 64*grps){ msg2[q] = 0; q++ ; }
@@ -106,20 +121,22 @@ unsigned *maker(t_md5 *l,  const char *msg, int mlen) {
             WBunion u;
             u.w = 8*mlen;
             q -= 8;
-            ft_memcpy(msg2+q, &u.w, 4 );
+            memcpy(msg2+q, &u.w, 4 );
         }
     }
+ 
     for (grp=0; grp<grps; grp++)
     {
-        ft_memcpy( mm.b, msg2+os, 64);
-        for(q=0;q<4;q++) abcd[q] = l->h[q];
+        memcpy( mm.b, msg2+os, 64);
+        for(q=0;q<4;q++) abcd[q] = h[q];
         for (p = 0; p<4; p++) {
-            fctn = l->ff[p];
-            rotn = l->rots[p];
-            m = l->M[p]; o= l->O[p];
+            fctn = ff[p];
+            rotn = rots[p];
+            m = M[p]; o= O[p];
             for (q=0; q<16; q++) {
                 g = (m*q + o) % 16;
-                f = abcd[1] + rol( abcd[0]+ fctn(abcd) + l->k[q+16*p] + mm.w[g], rotn[q%4]);
+                f = abcd[1] + rol( abcd[0]+ fctn(abcd) + k[q+16*p] + mm.w[g], rotn[q%4]);
+ 
                 abcd[0] = abcd[3];
                 abcd[3] = abcd[2];
                 abcd[2] = abcd[1];
@@ -127,12 +144,12 @@ unsigned *maker(t_md5 *l,  const char *msg, int mlen) {
             }
         }
         for (p=0; p<4; p++)
-            l->h[p] += abcd[p];
+            h[p] += abcd[p];
         os += 64;
     }
  
-        if( msg2 )
-         free( msg2 );
+    if( msg2 )
+        free( msg2 );
  
-        return l->h;
+    return h;
 } 

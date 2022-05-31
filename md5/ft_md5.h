@@ -28,7 +28,7 @@ typedef unsigned (*DgstFctn)(unsigned a[]);
 
 
 t_md5   init();
-unsigned *maker(t_md5 *l,  const char *msg, int mlen);
+unsigned *maker(const char *msg, int mlen);
 unsigned f0( unsigned abcd[] );
 unsigned f1( unsigned abcd[] );
 unsigned f2( unsigned abcd[] );
