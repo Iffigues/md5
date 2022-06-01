@@ -1,7 +1,7 @@
 NAME=ft_md5
 SRC=main.c open.c md5.c init_md5.c merde.c
 OBJ= $(SRC:.c=.o)
-CC= gcc -g -fsanitize=address
+CC= gcc #-g -fsanitize=address
 INCLUDE= -I ./
 all:$(NAME)
 $(NAME):$(OBJ)
