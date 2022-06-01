@@ -34,12 +34,13 @@ void deluxe(t_msg e) {
     int k = 0;
     int ee = e.size + 1;
     
-    while ((ee + k) % 512 != 423) k++;
+    while ((ee + k) % 512 != 448) k++;
     msg2 = malloc(ee + k);
     ft_memcpy(msg2, e.msg, e.size);
     msg2[e.size] = 0x80;
     while (uu++  < k)
         msg2[ee++] = 0;
+    msg2[ee] = e.size;
     printf("%d,%d, %s\n", k, ee, msg2);
 /*
     grps = 1 + (e.size + 8) / 64;
@@ -48,6 +49,7 @@ void deluxe(t_msg e) {
     msg2[e.size] = (unsigned char)0x80; 
     q = e.size + 1;
     while (q < 64*grps) {msg2[q] = 0; q++;}
+    printf("k = %d\n", q);
     unsigned w = 8 * e.size;
     q -= 8;
     ft_memcpy(msg2 + q, &w, 4);
