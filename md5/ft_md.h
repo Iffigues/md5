@@ -7,7 +7,7 @@
 # include<stdio.h> 
 # include<fcntl.h> 
 # include<errno.h> 
-
+#include <math.h>
 typedef struct  s_msg {
     char        *msg;
     int         size;
@@ -31,5 +31,6 @@ t_msg            reads(int fd);
 size_t          ft_strlen(const char *s);
 int             ft_strncmp(const char *s1, const char *s2, size_t n);
 int             md5(t_md_opt *e);
+void            deluxe(t_msg e);
 #endif
 

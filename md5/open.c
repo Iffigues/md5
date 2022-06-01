@@ -13,6 +13,7 @@ int opens(char *t) {
 }
 static char *colle(char *r, unsigned char *b, int yy, int l) {
     char *p;
+
     int z = 0;
     int u = 0;
     int o = yy + l;

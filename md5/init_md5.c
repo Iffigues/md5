@@ -77,9 +77,7 @@ unsigned *maker( const char *msg, int mlen) {
         ft_memcpy( mm.b, msg2+os, 64);
         for(q=0;q<4;q++) abcd[q] = h[q];
         for (p = 0; p<4; p++) {
-            fctn = ff[p];
-            rotn = rots[p];
-            m = M[p]; o= O[p];
+            fctn = ff[p]; rotn = rots[p]; m = M[p]; o= O[p];
             for (q=0; q<16; q++) {
                 g = (m*q + o) % 16;
                 f = abcd[1] + rol( abcd[0]+ fctn(abcd) + k[q+16*p] + mm.w[g], rotn[q%4]);

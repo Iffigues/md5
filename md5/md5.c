@@ -10,7 +10,6 @@ void print_md5(unsigned *d) {
 }
 
 unsigned  *mdd(t_msg t) {
-    printf("e");
     return maker(t.msg, t.size);   
 }
 
@@ -35,6 +34,8 @@ void printer(t_md_opt *e, t_msg t, char *y,  int i) {
 
 int vovo(t_md_opt *e) {
     t_msg t = reads(STDIN_FILENO);
+    if (!t.msg)
+        return 0;
     t.msg[ft_strlen(t.msg) - 1] = 0;
     if (e->p)
         printer(e, t, t.msg, 0);
@@ -53,7 +54,6 @@ int vava(t_md_opt *e) {
     int i;
     p.msg = NULL;
     t.msg = NULL;
-
     if (e->s) {
         t.msg = *e->arg++;
         t.size = ft_strlen(t.msg);
@@ -66,9 +66,11 @@ int vava(t_md_opt *e) {
         printer(e, p, p.msg, 0);
         free(p.msg);
     }
-    if (t.msg)
+    if (t.msg) {
+        deluxe(t);
+        exit(0);
         printer(e, t, t.msg, 1);
-   
+    }
     while (*e->arg) {
         i = opens(*e->arg);
         if (i < 0)
@@ -82,7 +84,6 @@ int vava(t_md_opt *e) {
 }
 
 int md5(t_md_opt *e) {
- printf("e\n");
     if (e->arg == NULL)
        return vovo(e);
     return vava(e);
