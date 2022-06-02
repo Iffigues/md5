@@ -32,16 +32,19 @@ void deluxe(t_msg e) {
     int o = 0;
     int uu = 0;
     int k = 0;
-    int ee = e.size + 1;
+    int ee = e.size * 8 + 1;
     
-    while ((ee + k) % 512 != 448) k++;
-    msg2 = malloc(ee + k);
+    while ((ee) % 512 != 448) ee++;
+    ee /= 8;
+    ee += 8;
+    printf("%d\n", ee);
+    msg2 = malloc(ee);
     ft_memcpy(msg2, e.msg, e.size);
     msg2[e.size] = 0x80;
     while (uu++  < k)
         msg2[ee++] = 0;
     msg2[ee] = e.size;
-    printf("%d,%d, %s\n", k, ee, msg2);
+    printf("%d,%d, %s\n", uu, ee, msg2);
 /*
     grps = 1 + (e.size + 8) / 64;
     msg2 = malloc( 64*grps);

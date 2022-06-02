@@ -79,6 +79,7 @@ unsigned *md5( const char *msg, int mlen)
     {
         grps  = 1 + (mlen+8)/64;
         msg2 = malloc( 64*grps);
+        printf("%d\n", grps);
         memcpy( msg2, msg, mlen);
         msg2[mlen] = (unsigned char)0x80;  
         q = mlen + 1;
@@ -123,7 +124,7 @@ unsigned *md5( const char *msg, int mlen)
 int main( int argc, char *argv[] )
 {
     int j,k;
-    const char *msg = "The quick brown fox jumps over the lazy dog.";
+    const char *msg = "t";
     unsigned *d = md5(msg, strlen(msg));
     WBunion u;
  
