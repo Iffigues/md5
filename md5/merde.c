@@ -30,37 +30,18 @@ void deluxe(t_msg e) {
     unsigned char *msg2;
     unsigned abcd[4];
     int o = 0;
-    int uu = 0;
-    int k = 0;
+    int uu = e.size + 1;
     int ee = e.size * 8 + 1;
     
     while ((ee) % 512 != 448) ee++;
     ee /= 8;
-    ee += 8;
-    printf("%d\n", ee);
-    msg2 = malloc(ee);
+    msg2 = malloc(ee+8);
     ft_memcpy(msg2, e.msg, e.size);
     msg2[e.size] = 0x80;
-    while (uu++  < k)
-        msg2[ee++] = 0;
+    while (uu < ee)
+        msg2[uu++] = 0;
     msg2[ee] = e.size;
     printf("%d,%d, %s\n", uu, ee, msg2);
-/*
-    grps = 1 + (e.size + 8) / 64;
-    msg2 = malloc( 64*grps);
-    ft_memcpy(msg2, e.msg,e.size);
-    msg2[e.size] = (unsigned char)0x80; 
-    q = e.size + 1;
-    while (q < 64*grps) {msg2[q] = 0; q++;}
-    printf("k = %d\n", q);
-    unsigned w = 8 * e.size;
-    q -= 8;
-    ft_memcpy(msg2 + q, &w, 4);
-    printf("%d %d\n", q, grps);
-    for (grp=0; grp<grps; grp++) {
-
-    }
-    */
     free(msg2);
     free(t.r);
     free(t.k);
