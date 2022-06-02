@@ -1,0 +1,8 @@
+se connecter sur la vm  avel le login level00 et mdp level00
+on va regarder les fichier appartenant a l'user flag00
+on utilise la commande find / -user flag00
+on  remarque dans les dernieres ligne un fichier se nommant "/rofs/usr/sbin/john"
+on fit un cat dessus un voie une chqine de chractere aleatoire dessus.
+surement un message crypte
+on test en premier lieux avec le chiffrement de cesar onn vois que c bon 
+
