@@ -1,0 +1,20 @@
+notrehome ontient un fichier "level03" qui est un executable compile,on le voie lorsque l on fait un cat dessus
+premierement on le lance pour voir se qu'il se passe 
+le programme dis seulement exploiteme
+on le lance avec d autre charactere rien ne change.
+on le lance avec gdb rien de special sauf que l on voie au il fait un appel system.
+
+on utilise le programme strings pour lire les string de l executable
+on voie qu il y a echo expoiltme 
+on supose que le programe fait un system("echo", "exploitme");
+on va donc changer la commande echo car l'executable apelle setresgid et setresuid et change donc probablement lesdroit d execution
+on va creer un faux programme echo:
+echo `which echo` > /dev/shm/echo
+on rajoute le programme dans le path au tout debut pour quele premier echo que trouve la commande /usr/bin/env soit notre faux echo
+PATH=/dev/shm:PATH
+onrajoute les droit d execution
+chmod +x `which echo`
+et on lance enfin l'executable ./level03
+on obtiens le flag
+
+

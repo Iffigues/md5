@@ -1,0 +1,17 @@
+il y a un programme en perle "level04"
+
+on l ouvre "cat level04"
+
+on voie que un server ecoutant sur le port 4747 va etre lancer
+le programme demande un parame X 
+donc on essaye via un navigateur 
+<ip>:4747?x=test
+on vois apparetre test sur la page web
+
+donc le code print `echo $y 2>&1` affiche bien ce l on envoie dans le parametre x
+on voie que le code utilise ` qui va lancer un sousshell
+donc on va nous  aussi utiliser un sous shell en mettant dnas le parametre x `getflag`
+http://192.168.56.102:4747/?x=`getflag`
+on voie apparetre le flag 
+
+ 
