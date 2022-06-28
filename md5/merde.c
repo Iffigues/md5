@@ -1,6 +1,5 @@
 #include "ft_md.h"
 
-
 t_md5 init() {
     t_md5 t;
     int i = 0;
@@ -23,25 +22,33 @@ t_md5 init() {
     return t;
 }
 
-void deluxe(t_msg e) {
+void deluxe( const char *msg, int size) {
     t_md5 t = init();
-    int grps, grp, q;
-    int os = 0;
+    unsigned w;
+    int q;
+    printf("%s %d\n", msg, size);
+
     unsigned char *msg2;
     unsigned abcd[4];
     int o = 0;
-    int uu = e.size + 1;
-    int ee = e.size * 8 + 1;
+    int uu = size + 1;
+    int ee = size * 8 + 1;
     
     while ((ee) % 512 != 448) ee++;
     ee /= 8;
-    msg2 = malloc(ee+8);
-    ft_memcpy(msg2, e.msg, e.size);
-    msg2[e.size] = 0x80;
-    while (uu < ee)
+    ee = ee + 8;
+    msg2 = malloc(ee);
+    printf("s = %d\n", ee);
+    ft_memcpy(msg2, msg, size);
+    msg2[size] = 0x80;
+    while (uu < ee) 
         msg2[uu++] = 0;
-    msg2[ee] = e.size;
-    printf("%d,%d, %s\n", uu, ee, msg2);
+    printf("%d\n", uu);
+    w = size * 8;
+    q = size + 1;
+    msg2[ee] = size;
+    printf("%s\n", msg2);
+
     free(msg2);
     free(t.r);
     free(t.k);

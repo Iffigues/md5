@@ -42,7 +42,6 @@ static int getOpt(char c, int u, char *t, t_md_opt *y) {
 
 int getOutput(t_md_opt *l, char *h) {
     if (!access(h, F_OK) == 0) {
-        printf("leo\n");
         int i = outer(h);
         l->out = i;
         return 1;
@@ -112,6 +111,8 @@ static t_md_opt getOptl() {
 
 int  main(int argc, char **argv)
 {
+    deluxe("abc", 3);
+    exit(0);
     t_md_opt l = getOptl();
 
 	if (argc > 1) {
