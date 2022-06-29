@@ -41,7 +41,7 @@ static int getOpt(char c, int u, char *t, t_md_opt *y) {
 }
 
 int getOutput(t_md_opt *l, char *h) {
-    if (!access(h, F_OK) == 0) {
+    if ((!access(h, F_OK)) == 0) {
         int i = outer(h);
         l->out = i;
         return 1;

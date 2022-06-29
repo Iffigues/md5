@@ -17,7 +17,10 @@ static char *colle(char *r, unsigned char *b, int yy, int l) {
     int o = yy + l;
     
     p = (char *)malloc((sizeof(char) * o));
-    while (z < yy) p[z] = r[z++];
+    while (z < yy) {
+	p[z] = r[z];
+	z++;
+    }
     while (u < l) p[z++] = b[u++];
     free(r);
     return p;
@@ -27,8 +30,10 @@ static char  *collapse(char *r, unsigned char *b, int yy, int l) {
     if (r == NULL) {
         int i = 0;
         r = (char *)malloc(((sizeof(char ) * l)));
-        while (i < l)
-            r[i] = b[i++];
+        while (i < l) {
+            r[i] = b[i];
+	i++;
+	}
         return r;
     }
     return colle(r, b, yy, l);

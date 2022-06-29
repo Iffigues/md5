@@ -27,6 +27,15 @@ void deluxe( const char *msg, int size) {
     unsigned w;
     int q;
 
+
+   int f;
+   int g;
+  
+    int a := t.h[0]
+    int b := t.h[1]
+    int c := t.h[2]
+    int d := t.h[3]
+
     unsigned char *msg2;
     unsigned abcd[4];
     int o = 0;
@@ -43,10 +52,15 @@ void deluxe( const char *msg, int size) {
     w = size * 8;
     uu = uu - 8;
     ft_memcpy(msg2 + uu, &w, 4);
-    printf("ee = %d\n", ee/64);
     for (int i = 0; i < ee / 64; i++) {
-        printf("f\n");
-        exit(0);
+        for (int y = 0; y < 64; y++ ) {
+		if (y <= 15) {
+			f = (b & c) | ((~b) & d);			
+		} else if (y <= 31) {
+		} else if (y <= 47) {
+		} else {
+		}
+	}
         msg = msg2 + 64;
     }
     free(msg2);

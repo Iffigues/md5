@@ -67,8 +67,6 @@ int vava(t_md_opt *e) {
         free(p.msg);
     }
     if (t.msg) {
-        deluxe(t);
-        exit(0);
         printer(e, t, t.msg, 1);
     }
     while (*e->arg) {
