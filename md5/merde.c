@@ -26,29 +26,29 @@ void deluxe( const char *msg, int size) {
     t_md5 t = init();
     unsigned w;
     int q;
-    printf("%s %d\n", msg, size);
 
     unsigned char *msg2;
     unsigned abcd[4];
     int o = 0;
     int uu = size + 1;
-    int ee = size * 8 + 1;
-    
+    int ee = size * 8 + 1;    
     while ((ee) % 512 != 448) ee++;
     ee /= 8;
     ee = ee + 8;
     msg2 = malloc(ee);
-    printf("s = %d\n", ee);
     ft_memcpy(msg2, msg, size);
     msg2[size] = 0x80;
     while (uu < ee) 
         msg2[uu++] = 0;
-    printf("%d\n", uu);
     w = size * 8;
-    q = size + 1;
-    msg2[ee] = size;
-    printf("%s\n", msg2);
-
+    uu = uu - 8;
+    ft_memcpy(msg2 + uu, &w, 4);
+    printf("ee = %d\n", ee/64);
+    for (int i = 0; i < ee / 64; i++) {
+        printf("f\n");
+        exit(0);
+        msg = msg2 + 64;
+    }
     free(msg2);
     free(t.r);
     free(t.k);
