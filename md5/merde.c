@@ -31,10 +31,10 @@ void deluxe( const char *msg, int size) {
    int f;
    int g;
   
-    int a := t.h[0]
-    int b := t.h[1]
-    int c := t.h[2]
-    int d := t.h[3]
+    int a = t.h[0];
+    int b = t.h[1];
+    int c = t.h[2];
+    int d = t.h[3];
 
     unsigned char *msg2;
     unsigned abcd[4];
@@ -55,10 +55,17 @@ void deluxe( const char *msg, int size) {
     for (int i = 0; i < ee / 64; i++) {
         for (int y = 0; y < 64; y++ ) {
 		if (y <= 15) {
-			f = (b & c) | ((~b) & d);			
+			f = (b & c) | ((~b) & d);		
+			g = y;	
 		} else if (y <= 31) {
+			f = (d & b) | ((~d) & c);
+			g = (5 * i + 1 ) % 16;
 		} else if (y <= 47) {
+			f = b ^ c ^ d;
+			g = (3 * i + 5) % 16;
 		} else {
+			f = c ^ (b | (~d));
+			g = (7 * i) % 16; 
 		}
 	}
         msg = msg2 + 64;
