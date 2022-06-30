@@ -8,6 +8,8 @@
 # include<fcntl.h> 
 # include<errno.h> 
 #include <math.h>
+#define INT_BITS 32
+
 typedef struct  s_msg {
     char        *msg;
     int         size;

@@ -22,8 +22,17 @@ t_md5 init() {
     return t;
 }
 
+
+int leftRotate(int n, unsigned int d)
+{
+   return (n << d)|(n >> (INT_BITS - d));
+}
+
+
 void deluxe( const char *msg, int size) {
-    t_md5 t = init();
+   	printf("%d\n", leftRotate(1,1));
+	exit(0);
+     t_md5 t = init();
     unsigned w;
     int q;
 
@@ -67,8 +76,14 @@ void deluxe( const char *msg, int size) {
 			f = c ^ (b | (~d));
 			g = (7 * i) % 16; 
 		}
+		int tmp = d;
+		d = c;
+		c = b;
+		b = leftRotate((a + f + t.r[y] + msg2[y]), t.r[i]) + b;
+		a = tmp;
 	}
-        msg = msg2 + 64;
+
+        msg2 = msg2 + 64;
     }
     free(msg2);
     free(t.r);
