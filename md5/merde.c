@@ -23,15 +23,13 @@ t_md5 init() {
 }
 
 
-int leftRotate(int n, unsigned int d)
-{
-   return (n << d)|(n >> (INT_BITS - d));
+int leftRotate (unsigned v, short amt ) {
+    unsigned  msk1 = (1<<amt) -1;
+    return ((v>>(32-amt)) & msk1) | ((v<<amt) & ~msk1);
 }
 
 
 void deluxe( const char *msg, int size) {
-   	printf("%d\n", leftRotate(1,1));
-	exit(0);
      t_md5 t = init();
     unsigned w;
     int q;
@@ -40,13 +38,8 @@ void deluxe( const char *msg, int size) {
    int f;
    int g;
   
-    int a = t.h[0];
-    int b = t.h[1];
-    int c = t.h[2];
-    int d = t.h[3];
 
     unsigned char *msg2;
-    unsigned abcd[4];
     int o = 0;
     int uu = size + 1;
     int ee = size * 8 + 1;    
@@ -62,6 +55,10 @@ void deluxe( const char *msg, int size) {
     uu = uu - 8;
     ft_memcpy(msg2 + uu, &w, 4);
     for (int i = 0; i < ee / 64; i++) {
+	int a = t.h[0];
+    	int b = t.h[1];
+    	int c = t.h[2];
+    	int d = t.h[3];
         for (int y = 0; y < 64; y++ ) {
 		if (y <= 15) {
 			f = (b & c) | ((~b) & d);		
@@ -80,12 +77,18 @@ void deluxe( const char *msg, int size) {
 		d = c;
 		c = b;
 		b = leftRotate((a + f + t.r[y] + msg2[y]), t.r[i]) + b;
+		printf("hahaha=%d\n", b);
 		a = tmp;
 	}
-
+	
         msg2 = msg2 + 64;
+  	t.h[0] = t.h[0] + a;
+	t.h[1] = t.h[1] + b;
+	t.h[2] = t.h[2] + c;
+	t.h[3] = t.h[3]	+ d;
+	printf("%d %d %d %d",t.h[0],t.h[1],t.h[2],t.h[3]);
     }
-    free(msg2);
+       	//   free(msg2);
     free(t.r);
     free(t.k);
 }
