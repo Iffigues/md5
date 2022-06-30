@@ -38,7 +38,7 @@ void deluxe( const char *msg, int size) {
    int f;
    int g;
   
-
+   printf("ddsds %d = d\n", t.r[1]);
     unsigned char *msg2;
     int o = 0;
     int uu = size + 1;
@@ -54,30 +54,32 @@ void deluxe( const char *msg, int size) {
     w = size * 8;
     uu = uu - 8;
     ft_memcpy(msg2 + uu, &w, 4);
+    printf("%d\n", *msg2+uu);
     for (int i = 0; i < ee / 64; i++) {
 	int a = t.h[0];
     	int b = t.h[1];
     	int c = t.h[2];
     	int d = t.h[3];
         for (int y = 0; y < 64; y++ ) {
-		if (y <= 15) {
+		if (y < 16) {
 			f = (b & c) | ((~b) & d);		
 			g = y;	
-		} else if (y <= 31) {
+		} else if (y < 32) {
 			f = (d & b) | ((~d) & c);
-			g = (5 * i + 1 ) % 16;
-		} else if (y <= 47) {
+			g = (5 * y + 1 ) % 16;
+		} else if (y < 48) {
 			f = b ^ c ^ d;
-			g = (3 * i + 5) % 16;
+			g = (3 * y + 5) % 16;
 		} else {
 			f = c ^ (b | (~d));
-			g = (7 * i) % 16; 
+			g = (7 * y) % 16; 
 		}
+		printf("%d %d\n",  f, g);
+		//exit(0);
 		int tmp = d;
 		d = c;
 		c = b;
-		b = leftRotate((a + f + t.r[y] + msg2[y]), t.r[i]) + b;
-		printf("hahaha=%d\n", b);
+		b = leftRotate((a + f + t.k[y] + msg2[y]), t.r[y]) + b;
 		a = tmp;
 	}
 	
@@ -86,8 +88,20 @@ void deluxe( const char *msg, int size) {
 	t.h[1] = t.h[1] + b;
 	t.h[2] = t.h[2] + c;
 	t.h[3] = t.h[3]	+ d;
-	printf("%d %d %d %d",t.h[0],t.h[1],t.h[2],t.h[3]);
+    	}
+
+
+ 	   WBunion u;
+	  int j;
+	 int k; 
+    printf("= 0x");
+    for (j=0;j<4; j++){
+        u.w = t.h[j];
+        for (k=0;k<4;k++) printf("%02x",u.b[k]);
     }
+    printf("\n");
+
+
        	//   free(msg2);
     free(t.r);
     free(t.k);
