@@ -14,10 +14,9 @@ t_md5 init() {
     for (;i<32;i++) t.r[i] = rot1[i%4];
     for (;i<48;i++) t.r[i] = rot2[i%4];
     for (;i<64;i++) t.r[i] = rot3[i%4];
-    for (i = 0; i < 64; i++) {
+    for (i = 0; i < 64; i++) 
 	    t.k[i] = floor(fabs(sin(i + 1)) * 4294967296);
-    }
-     t.h[0] = 0x67452301;
+    t.h[0] = 0x67452301;
     t.h[1] = 0xEFCDAB89;
     t.h[2] = 0x98BADCFE;
     t.h[3] = 0x10325476;
@@ -40,11 +39,18 @@ void deluxe( const char *msg, int size) {
      t_md5 t = init();
     unsigned w;
     int q;
-
+    int oo  = 0;
 
    int f;
    int g;
   
+
+
+    union {
+        unsigned w[16];
+        char     b[64];
+    }mm;
+
     unsigned char *msg2;
     int o = 0;
     int uu = size + 1;
@@ -60,8 +66,14 @@ void deluxe( const char *msg, int size) {
     w = size * 8;
     uu = uu - 8;
     ft_memcpy(msg2 + uu, &w, 4);
+    for (int i = 0; i < 64; i++) {
+        printf("i = %d \n", msg2[i]);
+    }
     for (int i = 0; i < ee / 64; i++) {
-	int a = t.h[0];
+    ft_memcpy(mm.b, msg2+oo, 64);
+    printf("oo - %d\n", mm.b[62]);
+
+    int a = t.h[0];
     	int b = t.h[1];
     	int c = t.h[2];
     	int d = t.h[3];
@@ -82,15 +94,14 @@ void deluxe( const char *msg, int size) {
 		int tmp = d;
 		d = c;
 		c = b;
-		b = leftR((a + f + t.k[y] + msg2[g]), t.r[y]) + b;
+		b = leftR((a + f + t.k[y] + mm.w[g]), t.r[y]) + b;
+        //printf("%d\n", msg2[g]);
 		a = tmp;
-		//printf("%d %d %d %d,%d\n", d,c,b,a, g);
-
 	}
-		printf("%d %d %d %d\n", d,c,b,a);
+		//printf("%d %d %d %d\n", d,c,b,a);
 //		exit(0);
 	
-        msg2 = msg2 + 64;
+        oo = oo + 64;
   	
 	t.h[0] = t.h[0] + a;
 	t.h[1] = t.h[1] + b;

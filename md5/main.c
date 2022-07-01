@@ -111,7 +111,7 @@ static t_md_opt getOptl() {
 
 int  main(int argc, char **argv)
 {
-    deluxe("abc", 3);
+    deluxe("abcd", 4);
     exit(0);
     t_md_opt l = getOptl();
 
