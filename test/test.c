@@ -83,6 +83,7 @@ unsigned *md5( const char *msg, int mlen)
         memcpy( msg2, msg, mlen);
         msg2[mlen] = (unsigned char)0x80;  
         q = mlen + 1;
+        
         while (q < 64*grps){ msg2[q] = 0; q++ ; }
         {
 //            unsigned char t;
@@ -93,16 +94,15 @@ unsigned *md5( const char *msg, int mlen)
             q -= 8;
             printf("%d\n", q);
             memcpy(msg2+q, &u.w, 4 );
-            for (int i = 0; i < 64; i++) {
-            printf("i = %d \n", msg2[i]);
-        }
+    
         }
     }
  
     for (grp=0; grp<grps; grp++)
     {
         memcpy( mm.b, msg2+os, 64);
-printf("oo - %d\n", mm.b[62]);
+        for (int i = 0; i < 16; i++)
+        printf("ee = %d\n", mm.w[i]);
         for(q=0;q<4;q++) abcd[q] = h[q];
         for (p = 0; p<4; p++) {
             fctn = ff[p];

@@ -24,7 +24,7 @@ t_md5 init() {
 }
 
 
-int leftRotate (unsigned v, short amt ) {
+uint32_t leftRotate (unsigned v, short amt ) {
     unsigned  msk1 = (1<<amt) -1;
     return ((v>>(32-amt)) & msk1) | ((v<<amt) & ~msk1);
 }
@@ -32,6 +32,7 @@ int leftRotate (unsigned v, short amt ) {
 
 int leftR(int n, unsigned int d)
 {
+    //return ((n) << (d)) | ((n) >> (32 - (d)));
    return (n << d)|(n >> (INT_BITS - d));
 }
 
@@ -41,7 +42,7 @@ void deluxe( const char *msg, int size) {
     int q;
     int oo  = 0;
 
-   int f;
+   uint32_t f;
    int g;
   
 
@@ -66,48 +67,41 @@ void deluxe( const char *msg, int size) {
     w = size * 8;
     uu = uu - 8;
     ft_memcpy(msg2 + uu, &w, 4);
-    for (int i = 0; i < 64; i++) {
-        printf("i = %d \n", msg2[i]);
-    }
-    for (int i = 0; i < ee / 64; i++) {
-    ft_memcpy(mm.b, msg2+oo, 64);
-    printf("oo - %d\n", mm.b[62]);
 
-    int a = t.h[0];
-    	int b = t.h[1];
-    	int c = t.h[2];
-    	int d = t.h[3];
+    for (int i = 0; i < ee / 64; i++) {
+        ft_memcpy(mm.b, msg2+oo, 64);
+        uint32_t a = t.h[0];
+    	uint32_t b = t.h[1];
+    	uint32_t c = t.h[2];
+    	uint32_t d = t.h[3];
         for (int y = 0; y < 64; y++ ) {
-		if (y < 16) {
-			f = (b & c) | ((~b) & d);		
-			g = y;	
-		} else if (y < 32) {
-			f = (d & b) | ((~d) & c);
-			g = (5 * y + 1 ) % 16;
-		} else if (y < 48) {
-			f = b ^ c ^ d;
-			g = (3 * y + 5) % 16;
-		} else {
-			f = c ^ (b | (~d));
-			g = (7 * y) % 16; 
-		}
-		int tmp = d;
-		d = c;
-		c = b;
-		b = leftR((a + f + t.k[y] + mm.w[g]), t.r[y]) + b;
-        //printf("%d\n", msg2[g]);
-		a = tmp;
-	}
-		//printf("%d %d %d %d\n", d,c,b,a);
-//		exit(0);
+            printf("aa i = %d a = %d b = %d c = %d d = %d w = %d r = %d f = %d k = %d\n", y,a,b,c,d,mm.w[g], t.r[y], f, t.k[y]);
+	    	if (y <= 15) {
+		    	f = (b & c) | ((~b) & d);		
+			    g = y;	
+		    } else if (y <= 31) {
+		    	f = (d & b) | ((~d) & c);
+			    g = (5 * y + 1 ) % 16;
+    		} else if (y <= 47) {
+			    f = b ^ c ^ d;
+			    g = (3 * y + 5) % 16;
+		    } else if (y <= 63) {
+			    f = c ^ (b | (~d));
+			    g = (7 * y) % 16; 
+		    }
+	    	uint32_t tmp = d;
+		    d = c;
+		    c = b;
+		    b = leftRotate((a + f + t.k[y] + mm.w[g]), t.r[y]) + b;
+		    a = tmp;
+            printf("ee i = %d a = %d b = %d c = %d d = %d w = %d r = %d f = %d k = %d\n\n", y,a,b,c,d,mm.w[g], t.r[y], f, t.k[y]);
+	    }
 	
         oo = oo + 64;
-  	
-	t.h[0] = t.h[0] + a;
-	t.h[1] = t.h[1] + b;
-	t.h[2] = t.h[2] + c;
-	t.h[3] = t.h[3]	+ d;
-	printf("%d \n", t.h[0]);
+	    t.h[0] = t.h[0] + a;
+	    t.h[1] = t.h[1] + b;
+	    t.h[2] = t.h[2] + c;
+	    t.h[3] = t.h[3]	+ d;
     }
 
 
