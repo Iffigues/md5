@@ -111,8 +111,7 @@ static t_md_opt getOptl() {
 
 int  main(int argc, char **argv)
 {
-    deluxe("abc", 3);
-    exit(0);
+
     t_md_opt l = getOptl();
 
 	if (argc > 1) {

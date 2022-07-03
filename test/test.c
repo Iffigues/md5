@@ -132,7 +132,7 @@ unsigned *md5( const char *msg, int mlen)
 int main( int argc, char *argv[] )
 {
     int j,k;
-    const char *msg = "abc";
+    const char *msg = "";
     unsigned *d = md5(msg, strlen(msg));
     WBunion u;
  

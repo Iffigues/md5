@@ -10,7 +10,8 @@ void print_md5(unsigned *d) {
 }
 
 unsigned  *mdd(t_msg t) {
-    return maker(t.msg, t.size);   
+    printf("zzz");
+    return deluxe(t.msg, t.size);   
 }
 
 void printer(t_md_opt *e, t_msg t, char *y,  int i) {

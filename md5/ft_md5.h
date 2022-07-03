@@ -19,6 +19,5 @@ typedef struct  s_md5 {
     unsigned *k;
     uint32_t h[4];
 }  t_md5;
-unsigned *maker( const char *msg, int mlen);
 #endif
 

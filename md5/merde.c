@@ -36,7 +36,7 @@ int leftR(int n, unsigned int d)
    return (n << d)|(n >> (INT_BITS - d));
 }
 
-void deluxe( const char *msg, int size) {
+uint32_t *deluxe( const char *msg, int size) {
      t_md5 t = init();
     unsigned w;
     int q;
@@ -75,7 +75,6 @@ void deluxe( const char *msg, int size) {
     	uint32_t c = t.h[2];
     	uint32_t d = t.h[3];
         for (int y = 0; y < 64; y++ ) {
-            printf("aa i = %d a = %d b = %d c = %d d = %d w = %d r = %d f = %d k = %d\n", y,a,b,c,d,mm.w[g], t.r[y], f, t.k[y]);
 	    	if (y <= 15) {
 		    	f = (b & c) | ((~b) & d);		
 			    g = y;	
@@ -94,7 +93,6 @@ void deluxe( const char *msg, int size) {
 		    c = b;
 		    b = leftRotate((a + f + t.k[y] + mm.w[g]), t.r[y]) + b;
 		    a = tmp;
-            printf("ee i = %d a = %d b = %d c = %d d = %d w = %d r = %d f = %d k = %d\n\n", y,a,b,c,d,mm.w[g], t.r[y], f, t.k[y]);
 	    }
 	
         oo = oo + 64;
@@ -105,7 +103,7 @@ void deluxe( const char *msg, int size) {
     }
 
 
- 	   WBunion u;
+ 	 /*  WBunion u;
 	  int j;
 	 int k; 
     printf("= 0x");
@@ -113,10 +111,9 @@ void deluxe( const char *msg, int size) {
         u.w = t.h[j];
         for (k=0;k<4;k++) printf("%02x",u.b[k]);
     }
-    printf("\n");
-
-
-       	//   free(msg2);
+    printf("\n");*/
+    free(msg2);
     free(t.r);
     free(t.k);
+    return t.h;
 }

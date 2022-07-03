@@ -33,7 +33,7 @@ t_msg            reads(int fd);
 size_t          ft_strlen(const char *s);
 int             ft_strncmp(const char *s1, const char *s2, size_t n);
 int             md5(t_md_opt *e);
-void deluxe(const char *msg, int mlen);
+uint32_t *deluxe(const char *msg, int mlen);
 
 #endif
 
