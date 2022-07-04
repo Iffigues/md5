@@ -66,6 +66,7 @@ uint32_t *deluxe( const char *msg, int size) {
         msg2[uu++] = 0;
     w = size * 8;
     uu = uu - 8;
+    printf("%d\n", uu);
     ft_memcpy(msg2 + uu, &w, 4);
 
     for (int i = 0; i < ee / 64; i++) {
@@ -101,17 +102,6 @@ uint32_t *deluxe( const char *msg, int size) {
 	    t.h[2] = t.h[2] + c;
 	    t.h[3] = t.h[3]	+ d;
     }
-
-
- 	 /*  WBunion u;
-	  int j;
-	 int k; 
-    printf("= 0x");
-    for (j=0;j<4; j++){
-        u.w = t.h[j];
-        for (k=0;k<4;k++) printf("%02x",u.b[k]);
-    }
-    printf("\n");*/
     free(msg2);
     free(t.r);
     free(t.k);

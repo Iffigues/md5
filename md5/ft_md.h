@@ -10,6 +10,11 @@
 #include <math.h>
 #define INT_BITS 32
 
+typedef struct s_sha {
+     uint32_t h[8];
+    uint32_t *k;
+}              t_sha;
+
 typedef struct  s_msg {
     char        *msg;
     int         size;
@@ -34,6 +39,7 @@ size_t          ft_strlen(const char *s);
 int             ft_strncmp(const char *s1, const char *s2, size_t n);
 int             md5(t_md_opt *e);
 uint32_t *deluxe(const char *msg, int mlen);
-
+uint32_t *sha( const char *msg, int size);
+int mm(t_md_opt *e);
 #endif
 

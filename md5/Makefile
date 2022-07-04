@@ -1,5 +1,5 @@
 NAME=ft_md5
-SRC=main.c open.c md5.c  merde.c
+SRC=main.c open.c md5.c  merde.c sha.c lol.c
 OBJ= $(SRC:.c=.o)
 CC= gcc #-g -fsanitize=address
 INCLUDE= -I ./

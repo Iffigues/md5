@@ -7,6 +7,10 @@
         l->pf = md5;
         return 1;
     }
+  if (ft_strcmp(*argv, "sha256") == 0) {
+        l->pf = mm;
+        return 1;
+    }
     l->pf = NULL;
     return -1;
 }
